@@ -36,7 +36,7 @@ class SendMoney extends Component
                 $userToTransfer = $user;
             }
             // dd($userToTransfer);
-            $user->transfer($userToTransfer, $this->ammount);
+            $user->transferFloat($userToTransfer, $this->ammount);
         }
         $this->open = false;
         // $user = new User();

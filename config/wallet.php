@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\MyRateService;
 use Bavix\Wallet\Models\Transaction;
 use Bavix\Wallet\Models\Transfer;
 use Bavix\Wallet\Models\Wallet;
@@ -31,7 +32,8 @@ return [
      */
     'package' => [
         'exchange' => Exchange::class,
-        'rateable' => Rate::class,
+        // 'rateable' => Rate::class,
+        'rateable' => MyRateService::class,
         'storable' => Store::class,
         'mathable' => MathService::class,
     ],
@@ -64,7 +66,12 @@ return [
      *
      * @deprecated use table "wallets", column meta.currency
      */
-    'currencies' => [],
+    'currencies' => [
+        'xbtc' => 'BTC',
+        'dollar' => 'USD',
+        'ruble' => 'RUB',
+        'cop' => 'COP',
+    ],
 
     /**
      * Services are the main core of the library and sometimes they need to be improved.
@@ -118,7 +125,7 @@ return [
         'creating' => [],
         'default' => [
             'name' => 'Dolar Americano',
-            'slug' => 'USD',
+            'slug' => 'dollar',
             'meta' => [],
         ],
     ],

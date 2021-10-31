@@ -42,7 +42,7 @@
                                 </a>
 
                                 <a class="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-blue-500"
-                                    href="#">
+                                    href="{{route("giros")}}">
                                     <span class="text-left">
                                         <svg width="20" height="20" fill="currentColor" class="m-auto"
                                             viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +282,7 @@
                                                                 </div>
                                                             </td>
                                                             <td class="px-4 py-3 text-sm">
-                                                                $ {{ $transaction->amount }}
+                                                                $ {{ $transaction->amount/pow(10,$transaction->wallet->decimal_places) }}
                                                             </td>
                                                             <td class="px-4 py-3 text-xs">
                                                                 <span

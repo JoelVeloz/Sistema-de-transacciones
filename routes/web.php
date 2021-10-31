@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TestController;
+use App\Models\MyRateService;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get(
 )->name('dashboard');
 
 
+Route::middleware(['auth:sanctum', 'verified'])->get(
+    '/giros',
+    [TestController::class, 'giros']
+)->name('giros');
+
+
+
+
 
 
 Route::get('p1', function () {
@@ -47,9 +56,9 @@ Route::get('cmd2', function () {
 
     for ($i = 0; $i < 100; $i++) {
 
-        $wallet1->transfer($wallet2, random_int(1, $wallet1->balance)*0.5);
+        $wallet1->transfer($wallet2, random_int(1, $wallet1->balance) * 0.5);
         // sleep(1);
-        $wallet2->transfer($wallet1, random_int(1, $wallet2->balance)*0.5);
+        $wallet2->transfer($wallet1, random_int(1, $wallet2->balance) * 0.5);
         // sleep(0.001);
     }
     return redirect()->route("userData");
@@ -59,7 +68,7 @@ Route::get('cmd2', function () {
 Route::get('clearData', function () {
     $user = User::all();
     foreach ($user as $key => $value) {
-        $wallet = $value->getWallet("USD");
+        $wallet = $value->getWallet("dollar");
         $wallet->withdraw($wallet->balance, ['description' => 'withdraw Testing']);
     }
     return redirect()->route("userData");
@@ -74,18 +83,36 @@ Route::get('dar', function () {
         $wallet->depositFloat(10.51, ['description' => 'DEPOSIT Testing']);
     }
     return redirect()->route("userData");
-
 });
 
 
 
+Route::get('obRate', function () {
+    $user1 = User::first();
+    $cop = $user1->getWallet("cop");
 
+    $usd = $user1->getWallet("dollar");
+
+    // $cop = $user1->getWallet("COP");
+    // $transfer = $usd->exchange($cop, $usd->balance);
+
+    // $rub->deposit(10000);
+    // return $cop->balanceFloat;
+
+    $transfer = $cop->exchange($usd, $cop->balance);
+    return $transfer;
+
+    return   $transfer;
+});
 
 
 Route::get('usersData', function () {
 
     return User::with(["wallets"])->get();
 })->name("userData");
+
+
+
 
 
 
