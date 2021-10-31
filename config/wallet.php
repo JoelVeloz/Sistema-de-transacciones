@@ -68,8 +68,8 @@ return [
      */
     'currencies' => [
         'xbtc' => 'BTC',
-        'dollar' => 'USD',
-        'ruble' => 'RUB',
+        'usd' => 'USD',
+        'rub' => 'RUB',
         'cop' => 'COP',
     ],
 
@@ -124,8 +124,8 @@ return [
         ],
         'creating' => [],
         'default' => [
-            'name' => 'Dolar Americano',
-            'slug' => 'dollar',
+            'name' => 'USD Billetera',
+            'slug' => 'usd',
             'meta' => [],
         ],
     ],

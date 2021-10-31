@@ -80,7 +80,7 @@ Route::get('dar', function () {
     $user = User::all();
     foreach ($user as $key => $value) {
         $wallet = $value->getWallet("USD");
-        $wallet->depositFloat(10.51, ['description' => 'DEPOSIT Testing']);
+        $wallet->depositFloat(10, ['description' => 'DEPOSIT Testing']);
     }
     return redirect()->route("userData");
 });
@@ -111,6 +111,15 @@ Route::get('usersData', function () {
     return User::with(["wallets"])->get();
 })->name("userData");
 
+
+Route::get('getDolarRate', function () {
+    $user1 = User::first();
+    $wallets =  $user1->wallets;
+    // $cop = $user1->getWallet("cop");
+
+
+    return $wallets;
+});
 
 
 

@@ -273,7 +273,9 @@
 
                                                                     </div>
                                                                     <div>
-                                                                        <p class="font-semibold">Dolar US</p>
+                                                                        <p class="font-semibold">
+                                                                            {{ $transaction->wallet->name }}
+                                                                        </p>
                                                                         <p
                                                                             class="text-xs text-gray-600 dark:text-gray-400">
                                                                             {{ $transaction->uuid }}

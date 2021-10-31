@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Services\WalletService;
+use Exception;
 use Illuminate\Support\Arr;
 
 class MyRateService extends \Bavix\Wallet\Simple\Rate
@@ -31,11 +32,13 @@ class MyRateService extends \Bavix\Wallet\Simple\Rate
         $from = app(WalletService::class)->getWallet($this->withCurrency);
         $to = app(WalletService::class)->getWallet($wallet);
 
-        return Arr::get(
-            Arr::get($this->rates, $from->currency, []),
-            $to->currency,
-            1
-        );
+        $rate = Arr::get(Arr::get($this->rates, $from->currency, []), $to->currency, 0);
+
+        if ($rate == 0) {
+            throw new Exception("Moneda no encontrada, " . $to->currency . " , No es compatible", 1);
+        } else {
+            return $rate;
+        }
     }
 
     public function convertTo(Wallet $wallet)

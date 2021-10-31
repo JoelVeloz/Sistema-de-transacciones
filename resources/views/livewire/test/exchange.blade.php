@@ -39,3 +39,11 @@
     </label>
 
 
+    <button wire:click="cambiar">
+        cambiar
+    </button>
+
+
+
+
+</div>
