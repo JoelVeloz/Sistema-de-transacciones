@@ -24,11 +24,9 @@ class Exchange extends Component
 
     public function cambiar()
     {
-        $user1 = User::first();
+        $user1 = Auth::user();
         $from = $user1->getWallet($this->from);
         $to = $user1->getWallet($this->to);
-
-
         $transfer = $from->exchange($to, $this->ammount * pow(10, $from->decimal_places));
         dd($transfer);
         // dd($this->from . "/" . $this->to);
