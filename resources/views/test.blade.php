@@ -331,7 +331,7 @@
                                                                     </p>
                                                                 @endif
                                                                 <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                                    ${{ number_format((\App\Models\RatesTest::rate($transaction->wallet) * abs($transaction->amount)) / pow(10, $transaction->wallet->decimal_places), 2) }}
+                                                                    ${{ (\App\Models\RatesTest::rate($transaction->wallet) * abs($transaction->amount)) / pow(10, $transaction->wallet->decimal_places) }}
                                                                 </p>
                                                             </td>
                                                         </tr>
