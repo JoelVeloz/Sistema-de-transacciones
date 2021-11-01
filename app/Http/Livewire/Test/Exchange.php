@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Test;
 
+use App\Models\Currency;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -28,7 +29,7 @@ class Exchange extends Component
         $to = $user1->getWallet($this->to);
 
 
-        $transfer = $from->exchange($to, $this->ammount *pow(10,$from->decimal_places));
+        $transfer = $from->exchange($to, $this->ammount * pow(10, $from->decimal_places));
         dd($transfer);
         // dd($this->from . "/" . $this->to);
     }
@@ -37,7 +38,9 @@ class Exchange extends Component
 
     public function render()
     {
-        $currencies =   config("wallet.currencies");
+        // $currencies =   config("wallet.currencies");
+        $currencies =   Currency::all()->pluck("code")->toArray();
+        // dd($currencies);
         $user = Auth::user();
         $wallets = $user->wallets;
         return view('livewire.test.exchange', compact("wallets", "currencies"));

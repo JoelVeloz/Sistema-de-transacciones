@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Test;
 
+use App\Models\Currency;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -13,6 +14,7 @@ class SendMoney extends Component
     public $open = false;
     public $email;
     public $ammount;
+    public $currency = "USD";
 
     public function abrir()
     {
@@ -36,7 +38,8 @@ class SendMoney extends Component
                 $userToTransfer = $user;
             }
             // dd($userToTransfer);
-            $user->transferFloat($userToTransfer, $this->ammount);
+            // dd($user->getWallet($this->currency));
+            $user->getWallet($this->currency)->transferFloat($userToTransfer->getWallet($this->currency), $this->ammount);
         }
         $this->open = false;
         // $user = new User();
@@ -55,6 +58,7 @@ class SendMoney extends Component
 
     public function render()
     {
-        return view('livewire.test.send-money');
+        $currencies = Currency::all()->pluck("code")->toArray();
+        return view('livewire.test.send-money', compact("currencies"));
     }
 }

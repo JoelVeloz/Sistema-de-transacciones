@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\TestController;
+use App\Models\Currency;
 use App\Models\MyRateService;
+use App\Models\RatesTest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,27 +51,25 @@ Route::get('p1', function () {
     return $user->balanceFloat; // 0
 });
 
-Route::get('cmd2', function () {
+Route::get('test2', function () {
     $user1 = User::first();
     $user2 = User::find(2);
     $wallet1 = $user1->getWallet("USD");
     $wallet2 = $user2->getWallet("USD");
 
     for ($i = 0; $i < 100; $i++) {
-
         $wallet1->transfer($wallet2, random_int(1, $wallet1->balance) * 0.5);
-        // sleep(1);
         $wallet2->transfer($wallet1, random_int(1, $wallet2->balance) * 0.5);
-        // sleep(0.001);
     }
-    return redirect()->route("userData");
 });
+// return redirect()->route("userData");
+// sleep(1);
 
 
 Route::get('clearData', function () {
     $user = User::all();
     foreach ($user as $key => $value) {
-        $wallet = $value->getWallet("dollar");
+        $wallet = $value->getWallet("USD");
         $wallet->withdraw($wallet->balance, ['description' => 'withdraw Testing']);
     }
     return redirect()->route("userData");
@@ -79,30 +80,37 @@ Route::get('clearData', function () {
 Route::get('dar', function () {
     $user = User::all();
     foreach ($user as $key => $value) {
+        // $wallet = $value->getWallet("USD");
         $wallet = $value->getWallet("USD");
-        $wallet->depositFloat(10, ['description' => 'DEPOSIT Testing']);
+        $wallet->depositFloat(10, ['description' => 'Deposito de prueba']);
     }
-    return redirect()->route("userData");
+    return redirect()->route("dashboard");
+});
+
+Route::get('createWallet', function () {
+    $wallet = Auth::user()->createWallet([
+        'name' => 'Bitcoin',
+        'slug' => 'BTC',
+        'decimal_places' => '7',
+    ]);
+    return  $wallet;
 });
 
 
 
 Route::get('obRate', function () {
     $user1 = User::first();
-    $cop = $user1->getWallet("cop");
-
-    $usd = $user1->getWallet("dollar");
-
+    $btc = $user1->getWallet("btc");
+    $usd = $user1->getWallet("usd");
     // $cop = $user1->getWallet("COP");
     // $transfer = $usd->exchange($cop, $usd->balance);
-
-    // $rub->deposit(10000);
+    $btc->depositFloat(1);
     // return $cop->balanceFloat;
 
-    $transfer = $cop->exchange($usd, $cop->balance);
+    $transfer = $btc->exchange($usd,  $btc->balance);
     return $transfer;
 
-    return   $transfer;
+    // return   $transfer;
 });
 
 
@@ -112,14 +120,42 @@ Route::get('usersData', function () {
 })->name("userData");
 
 
-Route::get('getDolarRate', function () {
-    $user1 = User::first();
-    $wallets =  $user1->wallets;
-    // $cop = $user1->getWallet("cop");
 
 
-    return $wallets;
+Route::get('ratesData', function () {
+    $rates = new RatesTest();
+    return $rates->rates;
 });
+
+Route::get('TEST123', function () {
+    // return Currency::exists("code", "==", "BTC");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Route::get('getDolarRate', function () {
+//     $user1 = User::first();
+//     $wallets =  $user1->wallets;
+//     $cop = $user1->getWallet("cop");
+//     // $insta = new MyRateService();
+//     return  $insta;
+
+//     return $wallets;
+// });
 
 
 

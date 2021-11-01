@@ -42,7 +42,7 @@
                                 </a>
 
                                 <a class="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-blue-500"
-                                    href="{{route("giros")}}">
+                                    href="{{ route('giros') }}">
                                     <span class="text-left">
                                         <svg width="20" height="20" fill="currentColor" class="m-auto"
                                             viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
@@ -117,7 +117,7 @@
                             </div>
                         </div>
                     </header>
-                    <div class="overflow-auto h-screen pb-24 pt-2 pr-2 pl-2 md:pt-0 md:pr-0 md:pl-0 ">
+                    <div class="h-screen pb-24 pt-2 pr-2 pl-2 md:pt-0 md:pr-0 md:pl-0 overflow-hidden ">
                         <div class="grid grid-cols-3 gap-4 ">
                             <div class="w-full flex flex-col gap-4">
 
@@ -135,7 +135,7 @@
                                             Saldo disponible
                                         </p>
                                         <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                            $ {{ $wallets->sum('balanceFloat') }}
+                                            $ {{ number_format($balance, 2) }} USD
                                         </p>
                                     </div>
                                 </div>
@@ -157,30 +157,44 @@
                                     </p>
                                     @foreach ($wallets as $wallet)
                                         <div
-                                            class="flex items-center justify-between border-2 border-cool-gray-200 rounded-lg w-full">
+                                            class="flex items-center justify-between border-2 border-cool-gray-200 rounded-lg w-full mb-2">
                                             <div class="flex items-center p-1">
                                                 <span class="rounded-xl relative p-2 bg-blue-100">
-                                                    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"
+                                                    {{-- <svg viewBox="0 0 473.681 473.681" xmlns="http://www.w3.org/2000/svg"
                                                         role="img" aria-labelledby="USD" height="32" width="32">
-                                                        <g fill="none">
-                                                            <circle fill="#F0F0F0" cx="20" cy="20" r="20"></circle>
-                                                            <path
-                                                                d="M19.13 20H40a20.022 20.022 0 00-.689-5.217h-20.18V20zm0-10.435h17.935a20.105 20.105 0 00-4.615-5.217H19.13v5.217zM20 40c4.707 0 9.033-1.627 12.45-4.348H7.55A19.914 19.914 0 0020 40zM2.936 30.435h34.129a19.88 19.88 0 002.246-5.218H.689a19.88 19.88 0 002.247 5.218z"
-                                                                fill="#D80027"></path>
-                                                            <path
-                                                                d="M9.264 3.123h1.823L9.392 4.355l.647 1.993-1.695-1.232-1.695 1.232.56-1.722a20.11 20.11 0 00-3.88 4.323h.584l-1.08.784a19.967 19.967 0 00-.483.855l.515 1.586-.961-.699a19.81 19.81 0 00-.654 1.553l.568 1.748h2.095l-1.695 1.231L2.865 18 1.17 16.768l-1.015.738A20.193 20.193 0 000 20h20V0A19.904 19.904 0 009.264 3.123zM10.04 18l-1.695-1.232L6.649 18l.647-1.993-1.695-1.232h2.095l.648-1.992.647 1.993h2.096l-1.695 1.231.647 1.993zm-.647-7.819l.647 1.993-1.695-1.232-1.695 1.232.647-1.993-1.695-1.232h2.095l.648-1.993.648 1.993h2.095l-1.695 1.232zM17.213 18l-1.695-1.232L13.823 18l.647-1.993-1.695-1.232h2.095l.648-1.992.647 1.993h2.096l-1.695 1.231.647 1.993zm-.648-7.819l.648 1.993-1.695-1.232-1.695 1.232.647-1.993-1.695-1.232h2.095l.648-1.993.647 1.993h2.096l-1.695 1.232zm0-5.826l.648 1.993-1.695-1.232-1.695 1.232.647-1.993-1.695-1.232h2.095l.648-1.993.647 1.993h2.096l-1.695 1.232z"
-                                                                fill="#0052B4"></path>
-                                                            <circle stroke-opacity="0.04" stroke="#000" cx="20" cy="20"
-                                                                r="19.5"></circle>
+                                                        <path style="fill:#FBD015;"
+                                                            d="M305.456,226.706h167.967C468.105,100.604,364.238,0.002,236.835,0.002  C300.37,0.002,303.642,111.759,305.456,226.706z" />
+                                                        <path style="fill:#21428C;"
+                                                            d="M305.456,351.039h138.888c18.679-33.869,29.337-72.783,29.337-114.195  c0-3.396-0.112-6.772-0.254-10.138h-157.1C317.004,269.595,313.369,312.899,305.456,351.039z" />
+                                                        <g>
+                                                            <path style="fill:#CD202A;"
+                                                                d="M229.258,473.548c-0.606-0.015-1.215-0.045-1.821-0.067   C228.039,473.503,228.649,473.533,229.258,473.548z" />
+                                                            <path style="fill:#CD202A;"
+                                                                d="M236.835,473.679c89.387,0,167.185-49.534,207.505-122.639H300.467   C285.92,421.119,280.397,473.679,236.835,473.679z" />
                                                         </g>
-                                                    </svg>
+                                                        <path style="fill:#FFFFFF;"
+                                                            d="M236.835,473.679c-2.539,0-5.063-0.052-7.576-0.131C231.786,473.626,234.314,473.679,236.835,473.679  z" />
+                                                        <path style="fill:#FCD73E;"
+                                                            d="M0.254,226.706h334.595C333.039,111.759,300.37,0.002,236.835,0.002  C109.439,0.002,5.572,100.604,0.254,226.706z" />
+                                                        <path style="fill:#1D4F95;"
+                                                            d="M334.849,226.706H0.254C0.112,230.072,0,233.449,0,236.844c0,41.412,10.658,80.326,29.337,114.195  h294.645C331.895,312.899,335.53,269.595,334.849,226.706z" />
+                                                        <path style="fill:#D11F3E;"
+                                                            d="M227.433,473.48c0.606,0.022,1.215,0.052,1.821,0.067c2.517,0.079,5.041,0.131,7.576,0.131  c43.562,0,72.596-52.56,87.143-122.639H29.333C68.236,421.564,142.022,470.145,227.433,473.48z" />
+                                                    </svg> --}}
+                                                    {{-- {{Arr::get($currencies->toArray, )}} --}}
+                                                    {!! $currencies->where('code', $wallet->slug)->first() == null ? '' : $currencies->where('code', $wallet->slug)->first()['image'] !!}
+                                                    {{-- {{ $currencies->where('code', $wallet->slug)->first() == null ? '' :
+                                                    $currencies->where('code', $wallet->slug)->first()->get("image") }} --}}
                                                 </span>
                                                 <div class="flex flex-col">
                                                     <span class="font-bold text-md text-black dark:text-white ml-2">
                                                         {{ $wallet->name }}
                                                     </span>
                                                     <span class="text-sm text-gray-500 dark:text-white ml-2">
-                                                        $ {{ $wallet->balanceFloat }}
+                                                        {{-- $ {{ $wallet->balanceFloat }} --}}
+                                                        {{-- ${{ number_format(1 / \App\Models\RatesTest::rate($wallet), $wallet->decimal_places) }} --}}
+                                                        ${{ round(\App\Models\RatesTest::rate($wallet), 6) }}
+
                                                     </span>
                                                 </div>
                                             </div>
@@ -194,14 +208,23 @@
                                                         </path>
                                                     </svg>
                                                 </button> --}}
-                                                <button class="text-gray-200">
+                                                {{-- <button class="text-gray-200">
                                                     <svg width="25" height="25" fill="currentColor"
                                                         viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
                                                         <path
                                                             d="M1088 1248v192q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h192q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h192q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h192q40 0 68 28t28 68z">
                                                         </path>
                                                     </svg>
-                                                </button>
+                                                </button> --}}
+
+                                                <div class="px-3 py-2 text-sm text-right flex flex-col">
+                                                    <p class="font-semibold text-green-500">
+                                                        {{ $wallet->balanceFloat . ' ' . $wallet->slug }}
+                                                    </p>
+                                                    <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                        ${{ number_format(\App\Models\RatesTest::rate($wallet) * $wallet->balanceFloat, 2) }}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
@@ -215,22 +238,24 @@
                                             ({{ $transactions->count() }})
                                         </span>
                                     </p>
-                                    <div class="w-full overflow-hidden rounded-lg shadow-xs ">
-                                        <div class="w-full overflow-x-auto">
-                                            <table class="w-full whitespace-no-wrap">
+                                    <div class="w-full  rounded-lg shadow-xs ">
+                                        <div class="w-full  overflow-hidden">
+                                            <table class="w-full whitespace-no-wrap overflow-hidden h-64">
                                                 <thead>
                                                     <tr
                                                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                                         <th class="px-4 py-3">Transacción</th>
-                                                        <th class="px-4 py-3">Monto</th>
-                                                        <th class="px-4 py-3">Estado</th>
-                                                        <th class="px-4 py-3">Fecha</th>
+                                                        {{-- <th class="px-4 py-3">Estado</th> --}}
+                                                        <th class="px-4 py-3 text-center">Fecha</th>
+                                                        <th class="px-6 py-3 text-right">Monto</th>
+
                                                     </tr>
                                                 </thead>
-                                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                                    @foreach ($transactions->sortByDesc('id')->take(5) as $transaction)
+                                                <tbody
+                                                    class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800  overflow-auto overflow-y-auto">
+                                                    @foreach ($transactions->sortByDesc('id')->take(10) as $transaction)
                                                         <tr class="text-gray-700 dark:text-gray-400">
-                                                            <td class="px-4 py-3">
+                                                            <td class="px-4 py-2">
                                                                 <div class="flex items-center text-sm">
                                                                     <!-- Avatar with inset shadow -->
                                                                     <div
@@ -283,17 +308,31 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            <td class="px-4 py-3 text-sm">
-                                                                $ {{ $transaction->amount/pow(10,$transaction->wallet->decimal_places) }}
-                                                            </td>
-                                                            <td class="px-4 py-3 text-xs">
+
+                                                            {{-- <td class="px-4 py-3 text-xs">
                                                                 <span
                                                                     class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                                                                     Aprobado
                                                                 </span>
-                                                            </td>
-                                                            <td class="px-4 py-3 text-sm">
+                                                            </td> --}}
+                                                            <td class="px-6 py-2 text-sm text-center">
                                                                 {{ $transaction->created_at }}
+                                                            </td>
+                                                            <td class="px-6 py-2 text-sm text-right">
+                                                                {{-- {{ $transaction->wallet->slug }} --}}
+                                                                @if ($transaction->amount > 0)
+
+                                                                    <p class="font-semibold text-green-500">
+                                                                        {{ number_format(abs($transaction->amount) / pow(10, $transaction->wallet->decimal_places), $transaction->wallet->decimal_places) . ' ' . $transaction->wallet->slug }}
+                                                                    </p>
+                                                                @else
+                                                                    <p class="font-semibold text-red-600">
+                                                                        {{ number_format(abs($transaction->amount) / pow(10, $transaction->wallet->decimal_places), $transaction->wallet->decimal_places) . ' ' . $transaction->wallet->slug }}
+                                                                    </p>
+                                                                @endif
+                                                                <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                                    ${{ number_format((\App\Models\RatesTest::rate($transaction->wallet) * abs($transaction->amount)) / pow(10, $transaction->wallet->decimal_places), 2) }}
+                                                                </p>
                                                             </td>
                                                         </tr>
 

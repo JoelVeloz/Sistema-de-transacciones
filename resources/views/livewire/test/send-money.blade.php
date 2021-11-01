@@ -36,6 +36,24 @@
                         <input type="text" id="required-email"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                             name="email" placeholder="Tu correo" wire:model.defer="email" />
+
+
+
+                        <label for="required-email" class="text-gray-700">
+                            Seleccion billetera a debitar
+
+                        </label>
+                        <select wire:model.defer="currency"
+                            class="block w-full text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                            name="animals">
+                            @foreach ($currencies as $item)
+                                <option value="{{ $item }}">
+                                    {{ $item }}
+                                </option>
+                            @endforeach
+
+                        </select>
+
                         <label for="required-email" class="text-gray-700">
                             Monto
 

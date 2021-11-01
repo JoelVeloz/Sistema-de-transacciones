@@ -3,6 +3,8 @@
 namespace Bavix\Wallet\Traits;
 
 use function array_key_exists;
+
+use App\Models\Currency;
 use Bavix\Wallet\Models\Wallet as WalletModel;
 use function config;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -45,12 +47,14 @@ trait HasWallets
         } catch (ModelNotFoundException $modelNotFoundException) {
 
             // CAMBIO 1
+            $currency = Currency::where("code", $slug)->first();
 
-            $wallet = $this->createWallet(['name' => $slug." Billetera", 'slug' => $slug]);
+            $wallet = $this->createWallet(['name' => $slug . " Wallet", 'slug' => $slug, "decimal_places" => $currency->decimal_places]);
+            // return $wallet;
             return $wallet;
-
-            return null;
         }
+        // return null;
+
     }
 
     /**
@@ -80,8 +84,7 @@ trait HasWallets
         if (!array_key_exists($slug, $this->_wallets)) {
             $this->_wallets[$slug] = $this->wallets()
                 ->where('slug', $slug)
-                ->firstOrFail()
-            ;
+                ->firstOrFail();
         }
 
         return $this->_wallets[$slug];

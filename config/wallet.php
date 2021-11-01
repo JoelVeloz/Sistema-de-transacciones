@@ -67,7 +67,8 @@ return [
      * @deprecated use table "wallets", column meta.currency
      */
     'currencies' => [
-        'xbtc' => 'BTC',
+        // 'xbtc' => 'BTC',
+        'btc' => 'BTC',
         'usd' => 'USD',
         'rub' => 'RUB',
         'cop' => 'COP',
