@@ -63,14 +63,12 @@ class MyRateService extends \Bavix\Wallet\Simple\Rate
 
         // dd($from->currency);
         if ($from->currency == "USD") {
-
             $rate =  Arr::get(Arr::get($cambios, $from->currency, []), $to->currency, 0);
             // dd($cambios);
 
         } else {
             $rate = 1 / Arr::get(Arr::get($cambios, "USD", []), $from->currency, 0);
         }
-
         if ($rate == 0) {
             throw new Exception("Moneda no encontrada, " . $to->currency . " , No es compatible", 1);
         } else {

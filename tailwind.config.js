@@ -24,19 +24,18 @@ const plugin = require('tailwindcss/plugin')
 const Color = require('color')
 
 module.exports = {
-    purge: [
-    ],
+    purge: ['public/**/*.html'],
     theme: {
-        // themeVariants: ['dark'],
-        // customForms: (theme) => ({
-        //     default: {
-        //         'input, textarea': {
-        //             '&::placeholder': {
-        //                 color: theme('colors.gray.400'),
-        //             },
-        //         },
-        //     },
-        // }),
+        themeVariants: ['dark'],
+        customForms: (theme) => ({
+            default: {
+                'input, textarea': {
+                    '&::placeholder': {
+                        color: theme('colors.gray.400'),
+                    },
+                },
+            },
+        }),
         colors: {
             transparent: 'transparent',
             white: '#ffffff',
@@ -183,22 +182,13 @@ module.exports = {
             },
         },
         extend: {
-            pointerEvents: ['hover', 'focus'],
-            transitionDuration: {
-                '0': '0ms',
-                '2000': '2000ms',
-            },
-            boxShadow: {
-                xs: '0 0 0 1px rgba(0, 0, 0, 0.05)',
-                outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
-            },
             maxHeight: {
                 '0': '0',
                 xl: '36rem',
             },
-            // fontFamily: {
-            //     sans: ['Inter', ...defaultTheme.fontFamily.sans],
-            // },
+            fontFamily: {
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+            },
         },
     },
     variants: {
@@ -207,43 +197,44 @@ module.exports = {
             'focus',
             'active',
             'odd',
-            // 'dark',
-            // 'dark:hover',
-            // 'dark:focus',
-            // 'dark:active',
-            // 'dark:odd',
+            'dark',
+            'dark:hover',
+            'dark:focus',
+            'dark:active',
+            'dark:odd',
         ],
-        display: ['responsive'],
+        display: ['responsive', 'dark'],
         textColor: [
             'focus-within',
             'hover',
             'active',
-            // 'dark',
-            // 'dark:focus-within',
-            // 'dark:hover',
-            // 'dark:active',
+            'dark',
+            'dark:focus-within',
+            'dark:hover',
+            'dark:active',
         ],
-        placeholderColor: ['focus'],
-        borderColor: ['focus', 'hover'],
-        // divideColor: ['dark'],
-        boxShadow: ['focus'],
+        placeholderColor: ['focus', 'dark', 'dark:focus'],
+        borderColor: ['focus', 'hover', 'dark', 'dark:focus', 'dark:hover'],
+        divideColor: ['dark'],
+        boxShadow: ['focus', 'dark:focus'],
     },
     plugins: [
-        // require('tailwindcss-multi-theme'),
-        // require('@tailwindcss/custom-forms'),
-        // plugin(({ addUtilities, e, theme, variants }) => {
-        //     const newUtilities = {}
-        //     Object.entries(theme('colors')).map(([name, value]) => {
-        //         if (name === 'transparent' || name === 'current') return
-        //         const color = value[300] ? value[300] : value
-        //         const hsla = Color(color).alpha(0.45).hsl().string()
+        require('tailwindcss-multi-theme'),
+        
+        require('@tailwindcss/custom-forms'),
+        plugin(({ addUtilities, e, theme, variants }) => {
+            const newUtilities = {}
+            Object.entries(theme('colors')).map(([name, value]) => {
+                if (name === 'transparent' || name === 'current') return
+                const color = value[300] ? value[300] : value
+                const hsla = Color(color).alpha(0.45).hsl().string()
 
-        //         newUtilities[`.shadow-outline-${name}`] = {
-        //             'box-shadow': `0 0 0 3px ${hsla}`,
-        //         }
-        //     })
+                newUtilities[`.shadow-outline-${name}`] = {
+                    'box-shadow': `0 0 0 3px ${hsla}`,
+                }
+            })
 
-        //     addUtilities(newUtilities, variants('boxShadow'))
-        // }),
+            addUtilities(newUtilities, variants('boxShadow'))
+        }),
     ],
 }
