@@ -13,6 +13,7 @@ class SendMoney extends Component
 {
     public $open = false;
     public $email;
+    public $note;
     public $ammount;
     public $currency = "USD";
 
@@ -39,7 +40,7 @@ class SendMoney extends Component
             }
             // dd($userToTransfer);
             // dd($user->getWallet($this->currency));
-            $user->getWallet($this->currency)->transferFloat($userToTransfer->getWallet($this->currency), $this->ammount);
+            $user->getWallet($this->currency)->transferFloat($userToTransfer->getWallet($this->currency), $this->ammount, ['description' => $this->note]);
         }
         $this->open = false;
         // $user = new User();

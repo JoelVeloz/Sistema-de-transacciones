@@ -38,7 +38,28 @@ Route::middleware(['auth:sanctum', 'verified'])->get(
 Route::middleware(['auth:sanctum', 'verified'])->get(
     '/giros',
     [TestController::class, 'giros']
-)->name('giros');
+)->name('exchange');
+
+
+
+// EDITAR
+Route::middleware(['auth:sanctum', 'verified'])->get(
+    '/settingS',
+    [TestController::class, 'giros']
+)->name('settings');
+
+
+
+Route::middleware(['auth:sanctum', 'verified'])->get(
+    '/settingSs',
+    [TestController::class, 'giros']
+)->name('withdrawals');
+
+
+Route::middleware(['auth:sanctum', 'verified'])->get(
+    '/settingSsasdas',
+    [TestController::class, 'giros']
+)->name('cashier');
 
 
 
@@ -82,7 +103,7 @@ Route::get('dar', function () {
     foreach ($user as $key => $value) {
         // $wallet = $value->getWallet("USD");
         $wallet = $value->getWallet("USD");
-        $wallet->depositFloat(10, ['description' => 'Deposito de prueba']);
+        $wallet->depositFloat(10, ['description' => 'Deposito de prueba', 'tittle' => 'deposit']);
     }
     return redirect()->route("dashboard");
 });
@@ -131,6 +152,13 @@ Route::get('TEST123', function () {
     // return Currency::exists("code", "==", "BTC");
 });
 
+
+Route::get('api/monedas', function () {
+    $data = new RatesTest();
+
+
+    return $data->rate(Auth::user()->getWallet("COP"));
+});
 
 
 

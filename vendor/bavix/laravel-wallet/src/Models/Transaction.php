@@ -12,6 +12,7 @@ use Bavix\Wallet\Services\WalletService;
 use function config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -113,5 +114,11 @@ class Transaction extends Model
         $decimalPlaces = $math->powTen($decimalPlacesValue);
 
         $this->amount = $math->round($math->mul($amount, $decimalPlaces));
+    }
+
+
+    public function transferWithdraw(): HasOne
+    {
+        return $this->hasOne(Transfer::class, 'withdraw_id')    ;
     }
 }

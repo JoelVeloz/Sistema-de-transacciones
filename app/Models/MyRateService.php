@@ -53,8 +53,7 @@ class MyRateService extends \Bavix\Wallet\Simple\Rate
 
     protected function rate(Wallet $wallet)
     {
-        $rates = new RatesTest();
-        $cambios =  $rates->rates;
+        $cambios =  RatesTest::rateList();
 
         $from = app(WalletService::class)->getWallet($this->withCurrency);
         $to = app(WalletService::class)->getWallet($wallet);

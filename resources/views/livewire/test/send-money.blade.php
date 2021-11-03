@@ -61,6 +61,13 @@
                         <input type="number" id="required-email"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                             name="email" placeholder="$10" wire:model.defer="ammount" />
+
+                        <label for="required-email" class="text-gray-700">
+                            Nota
+                        </label>
+                        <input type="text" id="required-email"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            name="email" placeholder="Ingresa un comentario" wire:model.defer="note" />
                     </div>
 
                     <div class="flex items-center justify-between gap-4 w-full mt-8">

@@ -12,28 +12,22 @@ class RatesTest extends Model
 {
     use HasFactory;
 
-    public $rates = [
-        'USD' => [
-            'USD' => 1,
-            'RUB' => 67.61,
-            'BRL' => 12.61,
-            'COP' => 3809.09,
-            'BTC' => 0.000016,
-        ],
-    ];
+    // public $rates = [
+    //     'USD' => [
+    //         'USD' => 1,
+    //         'RUB' => 67.61,
+    //         'BRL' => 12.61,
+    //         'COP' => 3809.09,
+    //         'BTC' => 0.000016,
+    //     ],
+    // ];
+
+
 
 
     static public function rate(Wallet $from)
     {
-        $cambios =  [
-            'USD' => [
-                'USD' => 1,
-                'RUB' => 67.61,
-                'BRL' => 12.61,
-                'COP' => 3809.09,
-                'BTC' => 0.000016,
-            ],
-        ];
+        $cambios =  RatesTest::rateList();
 
         if ($from->currency == "USD") {
             // dd("AQUI");
@@ -50,8 +44,30 @@ class RatesTest extends Model
     }
 
 
-    // static  public function get(Type $var = null)
-    // {
-    //     # code...
-    // }
+    static  public function rateList()
+    {
+        $api_url = 'https://openexchangerates.org/api/latest.json?app_id=b81616a8ba2948728cf4fbf220a8d11c';
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+        $response = json_decode($response, true);
+        $cambios =  [
+            'USD' => $response["rates"]
+        ];
+        return $cambios;
+    }
 }

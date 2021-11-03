@@ -17,15 +17,20 @@ class TestController extends Controller
     public function index()
     {
 
-        $cambio = new RatesTest();
+        $cambio = RatesTest::rateList()["USD"];
 
         $balance = Auth()->user()->wallets->map(function ($item) use ($cambio) {
-            $data = $cambio->rate($item) * $item->balanceFloat;
+            $data = (1 / $cambio[$item->slug]) * $item->balanceFloat;
             return $data;
         })->sum();
 
         $user = Auth::user();
         $wallets = $user->wallets;
+
+        // foreach ($wallets as $key => $value) {
+        //     $value->meta = ["rate" => $cambio[$value->slug]];
+        // }
+        // return  $wallets;
 
 
 
@@ -36,7 +41,7 @@ class TestController extends Controller
         $currencies = Currency::all();
 
         // return  $currencies;
-        return view('test', compact("balance", "wallets", "transactions", "currencies"));
+        return view('test', compact("balance", "wallets", "transactions", "currencies", "cambio"));
     }
 
 
