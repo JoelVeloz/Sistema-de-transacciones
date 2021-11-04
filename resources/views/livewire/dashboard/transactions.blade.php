@@ -1,7 +1,5 @@
 <div
     class="relative flex flex-col w-full h-full bg-white border border-indigo-300 rounded-lg shadow-lg dark:bg-gray-700">
-
-
     {{-- <div class="z-50 flex flex-col items-center flex-grow w-full bg-white rounded-lg shadow-lg dark:bg-gray-700"> --}}
     {{-- <button>
                 x
@@ -13,86 +11,32 @@
             @endforeach
             <br> --}}
     {{-- {{ $transation->transferWithdraw }} --}}
-    @if ($open)
-        <div class="absolute flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-50 rounded-lg">
-            <div class="z-50 p-4 m-auto bg-white shadow-lg w-96 rounded-2xl dark:bg-gray-800">
-                <div class="w-full h-full text-center">
-                    <div class="flex flex-col justify-between h-full">
-                        <p class="pb-5 mt-4 text-xl font-bold text-gray-800 dark:text-gray-200">
-                            Detalles de la transacción
-                        </p>
-                        <div class="flex justify-between gap-2 text-gray-600">
-                            <p>
-                                Tasa de cambio
-                            </p>
-                            <p>
-                                1.00 XRP ≈ 19.59 TRX
-                            </p>
-                        </div>
-
-                        <div
-                            class="flex flex-col justify-start gap-1 py-2 text-xs text-left text-gray-600 dark:text-gray-400">
-
-                            <p>
-                                ID de transacción:
-                            </p>
-                            <p class="font-semibold">
-                                e50697f6-deba-49a1-972b-9f47b87f5ea4
-                            </p>
-                            <p>
-                                Fecha:
-                            </p>
-                            <p class="font-semibold">
-                                December 17, 2020, 9:40:29 AM
-                            </p>
-                            <p>
-                                Estado:
-                            </p>
-                            <p class="flex items-center gap-2 font-semibold">
-                                <button type="button" class="w-2 h-2 text-xs text-white bg-green-400 rounded-full">
-                                    <span class="p-1">
-                                    </span>
-                                </button>
-                                Completado
-                            </p>
-
-                        </div>
-                        <div class="flex items-center justify-between w-full gap-4 mt-8">
-                            <button type="button" wire:click="cerrar"
-                                class="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ">
-                                Ok
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-    <p class="p-4 font-bold text-black text-md dark:text-white">
+    {{-- @if ($open) --}}
+    @include('components.widgets.item-transaction' ,["transaction" => $transation , "currencies" => $currencies])
+    <p class="px-4 pb-6 font-bold text-black text-md dark:text-white">
         Ultimas transacciones
-        {{-- <span class="ml-2 text-sm text-gray-500 dark:text-gray-300 dark:text-white">
-                ({{ $transactions->count() }})
-            </span> --}}
     </p>
+
+
     <div class="flex flex-col flex-grow w-full rounded-lg shadow-xs">
         <div class="flex-grow w-full">
             <table class="flex-grow w-full ">
                 <thead class="flex justify-between flex-grow w-full">
                     <tr
-                        class="flex w-full text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        class="grid w-full grid-cols-4 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         {{-- <th class="px-4 py-3">Transacción</th>
                         <th class="px-4 py-3 text-center">Fecha</th>
                         <th class="px-6 py-3 text-right">Monto</th> --}}
-                        <th class="w-1/3 p-4">Transacción</th>
-                        <th class="w-1/3 p-4">Fecha</th>
-                        <th class="w-1/3 p-4">Monto</th>
+                        <th class="col-span-2 p-4">Transacción</th>
+                        <th class="p-4 text-center">Fecha</th>
+                        <th class="p-4 text-right">Monto</th>
                     </tr>
                 </thead>
-                <tbody class="flex flex-col flex-grow w-full overflow-y-scroll bg-grey-light h-96">
+                <tbody class="flex flex-col w-full overflow-y-auto bg-grey-light h-96">
                     @foreach ($transactions->sortByDesc('id')->take(10) as $transaction)
                         <tr wire:click="abrir({{ $transaction }})"
-                            class="w-full text-gray-700 dark:text-gray-400 hover:bg-blue-100">
-                            <td class="w-3/5 px-4 py-2">
+                            class="grid w-full grid-cols-4 text-gray-700 border-b border-gray-200 dark:text-gray-400 hover:bg-blue-100">
+                            <td class="w-full col-span-2 px-4 py-2 whitespace-nowrap">
                                 <div class="flex items-center text-sm">
                                     <!-- Avatar with inset shadow -->
                                     <div class="w-8 h-8 mr-3 rounded-full ">
@@ -131,12 +75,11 @@
                                 </div>
                             </td>
 
-                            <td class="px-6 py-2 text-sm text-center whitespace-nowrap">
+                            <td class="flex items-center justify-center py-2 text-xs text-center whitespace-nowrap">
                                 {{ $transaction->created_at }}
                             </td>
-                            <td class="w-1/3 px-6 py-2 text-sm text-right">
+                            <td class="px-6 py-2 text-xs text-right whitespace-nowrap">
                                 @if ($transaction->amount > 0)
-
                                     <p class="font-semibold text-green-500">
                                         {{ number_format(abs($transaction->amount) / pow(10, $transaction->wallet->decimal_places), $transaction->wallet->decimal_places) . ' ' . $transaction->wallet->slug }}
                                     </p>
@@ -145,7 +88,13 @@
                                         {{ number_format(abs($transaction->amount) / pow(10, $transaction->wallet->decimal_places), $transaction->wallet->decimal_places) . ' ' . $transaction->wallet->slug }}
                                     </p>
                                 @endif
-                                <p class="text-xs text-gray-600 dark:text-gray-400">
+                                <p class="w-full text-xs text-gray-600 dark:text-gray-400">
+                                    @if ($transaction->wallet->slug == 'USD')
+                                        {{ "$" . number_format(abs($transaction->amount / pow(10, $transaction->wallet->decimal_places)), 2) }}
+                                    @else
+                                        {{ "$" . number_format(abs(Arr::get($transaction->meta, 'rate', 0) * $transaction->amount) / pow(10, $transaction->wallet->decimal_places), 2) }}
+
+                                    @endif
                                 </p>
                             </td>
                         </tr>

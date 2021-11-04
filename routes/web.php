@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\TestController;
 use App\Models\Currency;
 use App\Models\MyRateService;
 use App\Models\RatesTest;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,22 +25,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [AppController::class, "dashboard"])->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/exchange', [AppController::class, "exchange"])->name('exchange');
+Route::middleware(['auth:sanctum', 'verified'])->get('/withdrawals', [AppController::class, "swap"])->name('withdrawals');
+Route::middleware(['auth:sanctum', 'verified'])->get('/settings', [AppController::class, "swap"])->name('settings');
 
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get(
-    '/dashboard',
-    [TestController::class, 'index']
-)->name('dashboard');
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get(
-    '/giros',
-    [TestController::class, 'giros']
-)->name('exchange');
+
+
+
+
+
+
+
 
 
 

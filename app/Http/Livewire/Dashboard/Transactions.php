@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use App\Models\Currency;
 use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -37,9 +38,9 @@ class Transactions extends Component
     public function render()
     {
         // $user = ;
-
+        $currencies = Currency::all();
         $transactions = Auth::user()->transactions;
         // dd($transactions);
-        return view('livewire.dashboard.transactions', compact("transactions"));
+        return view('livewire.dashboard.transactions', compact("transactions", "currencies"));
     }
 }

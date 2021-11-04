@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Test;
 
 use App\Models\Currency;
+use App\Models\RatesTest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -24,11 +25,12 @@ class Exchange extends Component
 
     public function cambiar()
     {
+        $cambios =  RatesTest::rateList()["USD"];
         $user1 = Auth::user();
         $from = $user1->getWallet($this->from);
         $to = $user1->getWallet($this->to);
-        $transfer = $from->exchange($to, $this->ammount * pow(10, $from->decimal_places));
-        dd($transfer);
+        $transfer = $from->exchange($to, $this->ammount * pow(10, $from->decimal_places), ['rate' => round((1 / $cambios[$this->to]), 2)]);
+        // dd($transfer);
         // dd($this->from . "/" . $this->to);
     }
 

@@ -9,6 +9,8 @@ use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Internal\MathInterface;
 use Bavix\Wallet\Models\Wallet as WalletModel;
 use Bavix\Wallet\Services\WalletService;
+use Carbon\Carbon;
+
 use function config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -119,6 +121,12 @@ class Transaction extends Model
 
     public function transferWithdraw(): HasOne
     {
-        return $this->hasOne(Transfer::class, 'withdraw_id')    ;
+        return $this->hasOne(Transfer::class, 'withdraw_id');
+    }
+
+
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::parse($date)->format('Y-m-d h:i:s A');
     }
 }

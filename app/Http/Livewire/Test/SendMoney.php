@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Test;
 
 use App\Models\Currency;
+use App\Models\RatesTest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -31,6 +32,8 @@ class SendMoney extends Component
     public function send()
     {
         // dd(Auth::user()->wallets);
+        $cambios =  RatesTest::rateList()["USD"];
+        // dd($cambios);
 
         if ($this->email != null and $this->ammount != null) {
             $user =  Auth::user();
@@ -40,7 +43,7 @@ class SendMoney extends Component
             }
             // dd($userToTransfer);
             // dd($user->getWallet($this->currency));
-            $user->getWallet($this->currency)->transferFloat($userToTransfer->getWallet($this->currency), $this->ammount, ['description' => $this->note]);
+            $user->getWallet($this->currency)->transferFloat($userToTransfer->getWallet($this->currency), $this->ammount, ['description' => $this->note, 'rate' => round((1 / $cambios[$this->currency]), 2)]);
         }
         $this->open = false;
         // $user = new User();

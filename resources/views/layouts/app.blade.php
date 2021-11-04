@@ -45,9 +45,12 @@
         <main class="flex h-screen bg-blue-50 dark:bg-gray-800">
             <div class="flex justify-between w-full gap-4 m-5">
                 @include('components.nav')
-                <div class="flex flex-col w-full md:space-y-4 ">
+                <div class="flex flex-col w-full md:space-y-4">
                     @include('components.nav-bar')
-                    {{ $slot }}
+
+                    <div class="h-full">
+                        {{ $slot }}
+                    </div>
                 </div>
             </div>
         </main>

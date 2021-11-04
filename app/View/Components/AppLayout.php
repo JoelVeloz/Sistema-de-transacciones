@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\RatesTest;
 use Illuminate\View\Component;
 
 class AppLayout extends Component
@@ -13,6 +14,15 @@ class AppLayout extends Component
      */
     public function render()
     {
-        return view('layouts.app');
+
+        $cambio = RatesTest::rateList()["USD"];
+
+        $balance = Auth()->user()->wallets->map(function ($item) use ($cambio) {
+            $data = (1 / $cambio[$item->slug]) * $item->balanceFloat;
+            return $data;
+        })->sum();
+
+        $balance = number_format($balance, 2);
+        return view('layouts.app', compact("balance"));
     }
 }

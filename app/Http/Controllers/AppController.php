@@ -4,19 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Currency;
 use App\Models\RatesTest;
-use Bavix\Wallet\Models\Wallet;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
-class TestController extends Controller
+class AppController extends Controller
 {
 
-
-    public function index()
+    public function dashboard()
     {
-
         $cambio = RatesTest::rateList()["USD"];
 
         $balance = Auth()->user()->wallets->map(function ($item) use ($cambio) {
@@ -41,13 +36,23 @@ class TestController extends Controller
         $currencies = Currency::all();
 
         // return  $currencies;
-        return view('test', compact("balance", "wallets", "transactions", "currencies", "cambio"));
+        return view('pages.dashboard', compact("balance", "wallets", "transactions", "currencies", "cambio"));
+    }
+
+    public function exchange()
+    {
+        return view('pages.exchange');
     }
 
 
-    public function giros()
-    {
 
-        return view('test2');
+
+
+
+
+
+    public function blank()
+    {
+        return view('pages.blank');
     }
 }

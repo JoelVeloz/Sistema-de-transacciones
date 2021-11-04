@@ -44,7 +44,7 @@ class RatesTest extends Model
     }
 
 
-    static  public function rateList()
+    static public function rateList()
     {
         $api_url = 'https://openexchangerates.org/api/latest.json?app_id=b81616a8ba2948728cf4fbf220a8d11c';
 
@@ -65,6 +65,18 @@ class RatesTest extends Model
 
         curl_close($curl);
         $response = json_decode($response, true);
+
+
+        $response = [
+            'rates' => [
+                'USD' => 1,
+                'RUB' => 67.61,
+                'BRL' => 12.61,
+                'COP' => 3809.09,
+                'BTC' => 0.000016,
+            ],
+        ];
+
         $cambios =  [
             'USD' => $response["rates"]
         ];
