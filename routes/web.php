@@ -24,12 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [AppController::class, "dashboard"])->name('dashboard');
 Route::middleware(['auth:sanctum', 'verified'])->get('/exchange', [AppController::class, "exchange"])->name('exchange');
-Route::middleware(['auth:sanctum', 'verified'])->get('/withdrawals', [AppController::class, "swap"])->name('withdrawals');
-Route::middleware(['auth:sanctum', 'verified'])->get('/settings', [AppController::class, "swap"])->name('settings');
+Route::middleware(['auth:sanctum', 'verified'])->get('/withdrawals', [AppController::class, "blank"])->name('withdrawals');
+Route::middleware(['auth:sanctum', 'verified'])->get('/settings', [AppController::class, "blank"])->name('settings');
+Route::middleware(['auth:sanctum', 'verified'])->get('/cashier', [AppController::class, "blank"])->name('cashier');
 
 
 
@@ -46,23 +45,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/settings', [AppController
 
 
 // EDITAR
-Route::middleware(['auth:sanctum', 'verified'])->get(
-    '/settingS',
-    [TestController::class, 'giros']
-)->name('settings');
 
-
-
-Route::middleware(['auth:sanctum', 'verified'])->get(
-    '/settingSs',
-    [TestController::class, 'giros']
-)->name('withdrawals');
-
-
-Route::middleware(['auth:sanctum', 'verified'])->get(
-    '/settingSsasdas',
-    [TestController::class, 'giros']
-)->name('cashier');
 
 
 
